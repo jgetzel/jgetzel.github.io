@@ -131,7 +131,7 @@ const Subheader: React.FC = () => {
     return (
         <div id="subheader" className="flex justify-between items-center pl-4 w-full">
             <SocialLinks/>
-            <p className="text-2xl font-extrabold font-jetbrains">
+            <p className="text-2xl font-jetbrains">
                 <Typewriter text={"/// SOFTWARE ENGINEER"}
                             speed={100} startDelay={1200}/>
                 {/*// SOFTWARE ENGINEER*/}
@@ -272,6 +272,7 @@ const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 100, startDelay =
     const [displayedText, setDisplayedText] = useState('');
 
     useEffect(() => {
+        setDisplayedText('');
         const timeout = setTimeout(() => {
             let index = 0;
             const typeCharacter = () => {
