@@ -3,7 +3,6 @@ import {motion, Variants} from "framer-motion";
 
 const Home: React.FC = () => {
     return (
-        // comment test
         <div>
             <div className="fixed w-screen h-screen -z-40 bg-gradient-to-br from-stone-800 to-black"/> {/*background*/}
             <motion.div
@@ -135,7 +134,6 @@ const Subheader: React.FC = () => {
             <p className="text-2xl font-jetbrains">
                 <Typewriter text={"/// SOFTWARE ENGINEER"}
                             speed={100} startDelay={1200}/>
-                {/*// SOFTWARE ENGINEER*/}
                 <span className="text-white blinking-cursor">|</span>
             </p>
         </div>
