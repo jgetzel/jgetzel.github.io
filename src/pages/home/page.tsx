@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {motion, Variants} from "framer-motion";
 
 const Home: React.FC = () => {
     return (
         <div>
             <div className="fixed w-screen h-screen -z-40 bg-gradient-to-br from-stone-800 to-black"/> {/*background*/}
-            <div
+            <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fadeInUp}
                 className="text-stone-300 px-8 py-8 w-full h-full flex flex-col justify-center items-center"> {/*content*/}
-                <Header/>
+
+                    <Header/>
                 <hr className="mx-auto w-[75rem] border-1 border-stone-700 mb-10"/>
                 <div className="flex flex-col justify-start items-start w-[75rem] m-auto p-4 gap-8">
                     <h2 className="text-3xl font-semibold text-left tracking-wide">GAMES</h2>
@@ -81,9 +86,22 @@ const Home: React.FC = () => {
                         }
                     />
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
+}
+
+const fadeInUp: Variants = {
+    hidden: {opacity: 0, y: 100},
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: 0.75,
+            duration: 1.2,
+            ease: "backOut",
+        }
+    }
 }
 
 const Header: React.FC = () => {
@@ -114,7 +132,9 @@ const Subheader: React.FC = () => {
         <div id="subheader" className="flex justify-between items-center pl-4 w-full">
             <SocialLinks/>
             <p className="text-2xl font-extrabold font-jetbrains">
-                // SOFTWARE ENGINEER
+                <Typewriter text={"/// SOFTWARE ENGINEER"}
+                            speed={100} startDelay={1200}/>
+                {/*// SOFTWARE ENGINEER*/}
                 <span className="text-white blinking-cursor">|</span>
             </p>
         </div>
@@ -239,6 +259,35 @@ const ExperienceCard: React.FC<ExperienceCardProps> = (props) => {
             </ul>
         </div>
     )
+}
+
+interface TypewriterProps {
+    text: string;
+    speed?: number;
+    startDelay?: number;
+    className?: string;
+}
+
+const Typewriter: React.FC<TypewriterProps> = ({ text, speed = 100, startDelay = 0, className }) => {
+    const [displayedText, setDisplayedText] = useState('');
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            let index = 0;
+            const typeCharacter = () => {
+                setDisplayedText((prev) => prev + text[index]);
+                index++;
+                if (index < text.length - 1) {
+                    setTimeout(typeCharacter, speed);
+                }
+            };
+            typeCharacter();
+        }, startDelay);
+
+        return () => clearTimeout(timeout);
+    }, [text, speed, startDelay]);
+
+    return <span className={className}>{displayedText}</span>;
 }
 
 export default Home;
